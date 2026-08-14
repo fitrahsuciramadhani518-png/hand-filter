@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>HandFilter</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <!-- MediaPipe -->
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/control_utils/control_utils.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/drawing_utils/drawing_utils.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands/hands.js"></script>
+</head>
+
+<body>
+
+    <!-- =========================
+         HALAMAN PENDAFTARAN
+    ========================== -->
+
+    <section id="registerPage" class="page">
+
+        <div class="register-card">
+
+            <div class="logo">
+                ✋
+            </div>
+
+            <h1>Hand<span>Filter</span></h1>
+
+            <p class="welcome">
+                Buat akun untuk mulai bermain
+            </p>
+
+            <form id="registerForm">
+
+                <label for="name">
+                    Nama
+                </label>
+
+                <input
+                    type="text"
+                    id="name"
+                    placeholder="Masukkan nama kamu"
+                    required
+                >
+
+                <label for="age">
+                    Umur
+                </label>
+
+                <input
+                    type="number"
+                    id="age"
+                    placeholder="Masukkan umur"
+                    min="1"
+                    max="100"
+                    required
+                >
+
+                <label for="status">
+                    Status
+                </label>
+
+                <select id="status" required>
+
+                    <option value="">
+                        Pilih status
+                    </option>
+
+                    <option value="Pelajar">
+                        🎓 Pelajar
+                    </option>
+
+                    <option value="Mahasiswa">
+                        📚 Mahasiswa
+                    </option>
+
+                    <option value="Umum">
+                        👤 Umum
+                    </option>
+
+                </select>
+
+                <button type="submit" class="primary-btn">
+                    🚀 Masuk
+                </button>
+
+            </form>
+
+            <p id="registerMessage"></p>
+
+            <div class="age-info">
+                🔒 Fitur ini hanya tersedia untuk pengguna
+                <b>14 tahun ke atas.</b>
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================
+         HALAMAN GAME
+    ========================== -->
+
+    <section id="gamePage" class="page hidden">
+
+        <header class="topbar">
+
+            <div class="brand">
+                ✋ HandFilter
+            </div>
+
+            <div class="user-info">
+
+                <span id="userName">
+                    User
+                </span>
+
+                <span id="userAge">
+                    0 tahun
+                </span>
+
+                <button id="logoutButton">
+                    Keluar
+                </button>
+
+            </div>
+
+        </header>
+
+
+        <main class="main-content">
+
+            <div class="hero">
+
+                <p class="small-title">
+                    REALTIME HAND FILTER
+                </p>
+
+                <h2>
+                    Ubah gaya tangan,
+                    <span>ubah efeknya!</span>
+                </h2>
+
+                <p>
+                    Tunjukkan tanganmu ke kamera
+                    dan lihat efek berubah otomatis.
+                </p>
+
+            </div>
+
+
+            <!-- CAMERA -->
+
+            <div class="camera-wrapper">
+
+                <div class="camera-box">
+
+                    <video
+                        id="video"
+                        autoplay
+                        playsinline>
+                    </video>
+
+                    <canvas id="canvas"></canvas>
+
+                    <div id="effect"></div>
+
+
+                    <!-- INFO FILTER -->
+
+                    <div class="camera-info">
+
+                        <div id="gesture">
+                            ✋ Menunggu tangan...
+                        </div>
+
+                        <div id="filterName">
+                            Filter: -
+                        </div>
+
+                    </div>
+
+
+                    <!-- CAMERA STATUS -->
+
+                    <div class="camera-status">
+                        <span></span>
+                        CAMERA
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- FILTER GUIDE -->
+
+            <div class="section-title">
+
+                <h3>
+                    🎨 Gaya Tangan
+                </h3>
+
+                <p>
+                    Coba semua gaya tangan berikut
+                </p>
+
+            </div>
+
+
+            <div class="gesture-grid">
+
+                <div class="gesture-card">
+                    <div>✋</div>
+                    <strong>Telapak</strong>
+                    <small>🌈 Rainbow</small>
+                </div>
+
+                <div class="gesture-card">
+                    <div>✌️</div>
+                    <strong>Peace</strong>
+                    <small>✨ Sparkle</small>
+                </div>
+
+                <div class="gesture-card">
+                    <div>👍</div>
+                    <strong>Jempol</strong>
+                    <small>🔥 Fire</small>
+                </div>
+
+                <div class="gesture-card">
+                    <div>👊</div>
+                    <strong>Kepal</strong>
+                    <small>⚡ Electric</small>
+                </div>
+
+                <div class="gesture-card">
+                    <div>☝️</div>
+                    <strong>Satu</strong>
+                    <small>💙 Blue</small>
+                </div>
+
+            </div>
+
+
+            <!-- USER CARD -->
+
+            <div class="profile-card">
+
+                <div class="avatar">
+                    👤
+                </div>
+
+                <div>
+
+                    <h3 id="profileName">
+                        Nama
+                    </h3>
+
+                    <p id="profileStatus">
+                        Status
+                    </p>
+
+                </div>
+
+                <div class="profile-age">
+
+                    <strong id="profileAge">
+                        0
+                    </strong>
+
+                    <small>
+                        tahun
+                    </small>
+
+                </div>
+
+            </div>
+
+        </main>
+
+    </section>
+
+
+    <script src="script.js"></script>
+
+</body>
+</html>
